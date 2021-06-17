@@ -1,0 +1,13 @@
+/* @import url("normalize.css"); */
+/*:root ->获取根元素html*/
+:root{
+  --color-text:#f0f0f0;
+  --font-size: 14px;
+}
+
+body{
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+
+}
