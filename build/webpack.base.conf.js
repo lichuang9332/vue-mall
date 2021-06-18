@@ -24,9 +24,16 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
+    //路径别名
     alias: {
       '@': resolve('src'),
-    }
+      'assets': resolve('src/assets'),
+      'common': resolve('src/common'),
+      'components': resolve('src/components'),
+      'network': resolve('src/network'),
+      'store': resolve('src/store'),
+      'views': resolve('src/views'),
+    } 
   },
   module: {
     rules: [

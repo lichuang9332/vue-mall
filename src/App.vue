@@ -1,29 +1,14 @@
 <template>
   <div id="app">
-    <tab-bar>
-      <tab-bar-item>
-        <img slot="item-icon" src="./assets/img/01.jpg" alt="">
-        <div slot="item-text">首页</div>
-      </tab-bar-item>
-      <tab-bar-item>
-        <img slot="item-icon" src="./assets/img/02.jpg" alt="">
-        <div slot="item-text">分类</div>
-      </tab-bar-item>
-      <tab-bar-item>
-        <img slot="item-icon" src="./assets/img/01.jpg" alt="">
-        <div slot="item-text">购物车</div>
-      </tab-bar-item>
-      <tab-bar-item>
-        <img slot="item-icon" src="./assets/img/02.jpg" alt="">
-        <div slot="item-text">我的</div>
-      </tab-bar-item>
-    </tab-bar>
+    <!-- 占位放到App.vue -->
+    <router-view></router-view>
+    <main-bar></main-bar>
   </div>
 </template>
 
 <script>
-  import TabBar from "./components/tabbar/TabBar.vue"
-  import TabBarItem from "./components/tabbar/TabBarItem.vue"
+  //高度封装的底部菜单（TabBar(TabBarItem)）
+  import MainBar from "components/content/MainBar.vue"
 export default {
   name: 'App',
   data(){
@@ -34,6 +19,7 @@ export default {
   methods:{
 
   },
+  //计算属性，函数，调用的时候是不加()的，属性一般是没有set方法的，只读属性
   computed:{
 
   },
@@ -41,8 +27,7 @@ export default {
 
   },
   components:{
-    TabBar,
-    TabBarItem
+    MainBar
   }
 
 }
