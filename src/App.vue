@@ -8,7 +8,7 @@
 
 <script>
   //高度封装的底部菜单（TabBar(TabBarItem)）
-  import MainBar from "components/content/MainBar.vue"
+  import MainBar from "components/content/mainBar/MainBar.vue"
 export default {
   name: 'App',
   data(){

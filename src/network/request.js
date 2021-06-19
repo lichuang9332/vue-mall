@@ -62,7 +62,7 @@ export function request(config){
       //假如一些信息不符合要求
       //转圈圈的效果
       //登录token的判断
-      console.log(config);
+      //console.log(config);
       //处理返回他
       return config;
     },err=>{
@@ -70,7 +70,7 @@ export function request(config){
     });
     instance.interceptors.response.use(res=>{
       //结果
-      console.log(res);
+      //console.log(res);
       //处理返回他
       return res.data;
     },err=>{
