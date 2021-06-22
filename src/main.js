@@ -8,6 +8,9 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI);
 
+//通过new 一个vue()实例，实现事件总线$bus
+Vue.prototype.$bus = new Vue();
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

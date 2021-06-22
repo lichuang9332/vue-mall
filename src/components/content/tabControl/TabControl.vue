@@ -27,6 +27,9 @@
     methods:{
       tabClick(index){
           this.currentIndex = index;
+          //子往父父组件传递参数 （发送的事件，参数）,不能和点击事件同名
+          this.$emit('tabClickPa', index);
+
       }
     },
     computed:{
@@ -49,6 +52,7 @@
     font-size: 16px;
     height: 44px;
     line-height: 44px;
+    background-color: #fff;
   }
   .tab-control-item{
     flex: 1;

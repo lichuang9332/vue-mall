@@ -12,6 +12,11 @@ body{
   font-size: 14px;
 
 }
+/* 去掉a标签的下划线 */
 a{
   text-decoration: none;
+}
+/* 去掉li前面的小圆点 */
+li {
+  list-style-type:none;
 }
