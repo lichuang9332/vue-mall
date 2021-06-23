@@ -160,7 +160,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   /* 父类必须设置高度才有效 */
 .wrapper{
   height: 150px;

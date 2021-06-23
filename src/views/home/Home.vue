@@ -3,6 +3,12 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
+    <!-- 这一块加多一个tab-control -->
+    <tab-control class="tab-control-show"
+    :titles = "['流行','新款','精选']"
+    ref="tabControl1"
+    v-show="isTabFixed"
+    @tabClickPa="tabClickPa"></tab-control>
     <!-- 这一块都在滚动组件里面 -->
     <scroll class="content" ref="scroll"
     :probeType="3"
@@ -13,7 +19,7 @@
       <el-carousel height="250px">
         <el-carousel-item v-for="item in banners" :key="item.url">
           <a :href="item.url">
-            <img class="carousel-image" :src="item.url"/>
+            <img class="carousel-image" :src="item.url" @load="imageLoad"/>
           </a>
         </el-carousel-item>
       </el-carousel>
@@ -21,7 +27,10 @@
       <home-recommend :recommends="recommends"></home-recommend>
       <!-- 本周流行组件 -->
       <feature></feature>
-      <tab-control class="tab-control" :titles = "['流行','新款','精选']"  @tabClickPa="tabClickPa" ></tab-control>
+      <tab-control
+      :titles = "['流行','新款','精选']"
+      ref="tabControl2"
+      @tabClickPa="tabClickPa"></tab-control>
       <!-- 商品列表 搞个计算属性-->
       <goods-list :goods="showGoods"></goods-list>
     </scroll>
@@ -40,10 +49,14 @@
   import BackTop from 'components/content/backtop/BackTop.vue'
 
   //import {getHomeMenuData,getHomeGoods} from "network/home"
+  import {debounce} from 'common/utils'
   export default {
     name: 'Home',
     data(){
       return {
+        tabOffsetTop: 0,  //tabcontrol
+        isTabFixed: false,
+        isImageLoad: false,
         isShowBackTop: false,
         message:'',
         currentType: 'pop',
@@ -104,6 +117,8 @@
             this.currentType = 'sell'
           break;
         }
+        this.$refs.tabControl1.currentIndex = index;
+        this.$refs.tabControl2.currentIndex = index;
       },
       backClick(){
         //通过ref拿到组件和组件的属性
@@ -118,21 +133,45 @@
         }else{
           this.isShowBackTop = false
         }
+        //判断tabControl是否吸顶(实现方式有点问题)
+        console.log(-position.y);
+        console.log(this.tabOffsetTop);
+        this.isTabFixed = (-position.y) > this.tabOffsetTop
+
+
       },
       pullingUpEmit(){
-        console.log('上拉加载更多')
-        console.log(this.currentType);
+        // console.log('上拉加载更多')
+        // console.log(this.currentType);
         //请求数据，增加页码
 
         //清除
         this.$refs.scroll.scroll.finishPullUp()
         //刷新scroll
-         this.$refs.scroll.scroll.refresh();
+        this.$refs.scroll.scroll.refresh();
 
-      }
+      },
+      //图片加载完成,阻止多次调用
+      imageLoad(){
+        if(!this.isImageLoad){
+          this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop;
+        }
+        this.isImageLoad = true
+      },
 
       //2.网络请求相关
 
+
+      //3.防抖动函数(抽到utils里面)
+      // debounce(func,delay){
+      //   let timer = null;
+      //   return function(...args){
+      //     if (timer) clearTimeout(timer)
+      //     timer = setTimeout(()=>{
+      //       func.apply(this,args)
+      //     },delay);
+      //   }
+      // }
 
     },
     computed:{
@@ -168,10 +207,18 @@
       //   this.goods[type].page +=1;
       // })
 
+    },
+    mounted(){
       //监听图片加载完成
+      const refresh = debounce(this.$refs.scroll.scroll.refresh(),200);
       this.$bus.$on('imgLoadComplete',()=>{
-           this.$refs.scroll.scroll.refresh();
+        //应用防抖动函数
+        refresh();
+
       })
+
+      // const tabControl = this.$refs.tabControl.$el.offsetTop;
+      // console.log(tabControl);
 
     }
 
@@ -189,10 +236,11 @@
   background: #ff5777;
   color: #F0F0F0;
   font-weight: 600;
-  position: fixed;
+  /* 在原生浏览器的时候,不跟随浏览器滚动 */
+/*  position: fixed;
   left: 0;
   right: 0;
-  top: 0;
+  top: 0; */
   z-index: 999;
 }
 
@@ -203,10 +251,14 @@
   height: 250px;
 }
 /* 粘性属性,达到条件后粘住，兼容性不好 */
-.tab-control{
+/* .tab-control{
   position: sticky;
   top: 44px;
-    z-index: 9;
+  z-index: 9;
+} */
+.tab-control-show{
+  position: relative;
+  z-index: 9;
 }
 .content{
   position: absolute;
@@ -216,6 +268,5 @@
   bottom: 49px;
   overflow: hidden;
 }
-
 
 </style>

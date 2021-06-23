@@ -52,6 +52,7 @@
       this.scroll.on('scroll',(position)=>{
         //发送事件出去
         this.$emit('scrollEmit',position)
+        
       })
       //设置了true才能监听
       if(this.pullUpLoad){
