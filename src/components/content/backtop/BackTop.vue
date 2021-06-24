@@ -1,7 +1,7 @@
 <template>
   <!-- 可以在外面监听组件 .native -->
   <div class="back-top">
-      <img src="~assets/img/top02.jpg" alt="">
+      <img src="~assets/img/top03.png" alt="">
   </div>
 </template>
 
@@ -45,6 +45,7 @@ z-index: 999;
   z-index: 99;
   border-radius: 22px;
   width: 44px;
+  background-color: rgba(0,0,0,0.2);
 }
 
 </style>
