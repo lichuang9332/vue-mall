@@ -6,6 +6,7 @@ import Home from '@/views/home/Home'
 import Category from '@/views/category/Category'
 import Cart from '@/views/cart/Cart'
 import Profile from '@/views/profile/Profile'
+import Detail from '@/views/detail/Detail'
 //Router是插件
 
 Vue.use(Router)
@@ -39,6 +40,13 @@ export default new Router({
       path: '/profile',
       // name: 'Profile',
       component: Profile
+    },
+    ,
+    {
+      // path: '/detail',
+      path: '/detail/:id',  //动态路由
+      // name: 'Profile',
+      component: Detail
     }
   ]
 })

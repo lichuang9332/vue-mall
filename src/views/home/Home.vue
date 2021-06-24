@@ -55,9 +55,10 @@
     data(){
       return {
         tabOffsetTop: 0,  //tabcontrol
-        isTabFixed: false,
-        isImageLoad: false,
-        isShowBackTop: false,
+        isTabFixed: false,    //是否显示顶部tabcontrol
+        isImageLoad: false,    //是否允许图片加载
+        isShowBackTop: false,   //是否显示回到顶部
+        saveY: 0, //保存离开的时候滚动到的位置
         message:'',
         currentType: 'pop',
         recommends: [
@@ -220,6 +221,22 @@
       // const tabControl = this.$refs.tabControl.$el.offsetTop;
       // console.log(tabControl);
 
+    },
+    destroyed(){
+      console.log('首页销毁');
+
+    },
+    //进入
+    activated(){
+      console.log('activated');
+      this.$refs.scroll.scroll.scrollTo(0, this.saveY,0);
+      //回来的时候要刷一次scroll
+      this.$refs.scroll.scroll.refresh();
+    },
+    //离开
+    deactivated(){
+      console.log('deactivated');
+      this.saveY = this.$refs.scroll.scroll.y;
     }
 
   }

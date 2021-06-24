@@ -32,7 +32,8 @@
         //获取详情ID
         const id = this.goodsItem.id;
         //跳转到详情页
-        this.$router.push({path:'/detail', query:{id}});
+        // this.$router.push({path:'/detail', query:{id}});
+        this.$router.push('/detail/'+id); //动态路由形式
 
       },
       //@load监听图片的加载完成事件

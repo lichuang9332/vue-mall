@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <!-- 占位放到App.vue -->
-    <router-view></router-view>
+    <!-- 占位放到App.vue 并且设置keep-alive不让其销毁-->
+    <keep-alive exclude="Detail">
+        <router-view></router-view>
+    </keep-alive>
     <main-bar></main-bar>
   </div>
 </template>
