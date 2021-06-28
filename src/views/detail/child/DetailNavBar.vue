@@ -17,19 +17,21 @@
 
 <script>
   import NavBar from 'components/common/navbar/NavBar'
-  
+
   export default {
     name: 'DetailNavBar',
     data(){
       return {
         message:'',
-        titils:['商品','参数','标题','评论'],
+        titils:['商品','参数','评论','推荐'],
         currentIndex:0
       }
     },
     methods:{
       itemClick(index){
         this.currentIndex=index;
+        //发送事件出去
+        this.$emit('backClickEmit',index)
       },
 
       backClick(){

@@ -47,11 +47,14 @@
   import GoodsList from 'components/content/goods/GoodsList.vue'
   import Scroll from 'components/common/scroll/Scroll.vue'
   import BackTop from 'components/content/backtop/BackTop.vue'
+  //导入混入
+  import {itemListener} from 'common/mixin.js'
 
   //import {getHomeMenuData,getHomeGoods} from "network/home"
   import {debounce} from 'common/utils'
   export default {
     name: 'Home',
+    mixins:[itemListener],  //混入mixin
     data(){
       return {
         tabOffsetTop: 0,  //tabcontrol
@@ -210,13 +213,14 @@
 
     },
     mounted(){
-      //监听图片加载完成
-      const refresh = debounce(this.$refs.scroll.scroll.refresh(),200);
-      this.$bus.$on('imgLoadComplete',()=>{
-        //应用防抖动函数
-        refresh();
+      // //监听图片加载完成
+      // const refresh = debounce(this.$refs.scroll.scroll.refresh(),200);
+      // this.imgLoadListener = ()=>{
+      //   //应用防抖动函数
+      //   refresh();
 
-      })
+      // };
+      // this.$bus.$on('imgLoadComplete', this.imgLoadListener)
 
       // const tabControl = this.$refs.tabControl.$el.offsetTop;
       // console.log(tabControl);
@@ -224,7 +228,9 @@
     },
     destroyed(){
       console.log('首页销毁');
-
+      //离开的时候注销掉首页图片的加载事件
+      this.$bus.$off('imgLoadComplete', this.imgLoadListener);
+       console.log('销毁imgLoad');
     },
     //进入
     activated(){
