@@ -1,7 +1,9 @@
 //导入  vue和vuex
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import mutations from './mutations'
+import actions from './actions'
+import getters from './getters'
 //1.Vuex是个插件，需要use
 Vue.use(Vuex);
 
@@ -12,26 +14,11 @@ const store = new Vuex.Store({
 
     ]
   },
-  mutations:{
-    addCart(state,payload){
-      //数组常用的函数：push pop shift unshift sort reverse map filter reduce join
-      //find()
-      let old = null;
-      for(let item of state.cartList){
-        if(item.id == payload.id){
-          old = item;
-        }
-      }
-      if(old){
-        old.count +=1;
-      }else{
-        payload.count =1;
-        state.cartList.push(payload);
-      }
-
-    }
-
-  }
+  //mutations唯一的目的就是修改state的状态
+  //mutations中的方法最好是每个方法完成比较单一的事件
+  mutations,
+  getters,
+  actions
 })
 
 //导出，挂载到Vue实例上面

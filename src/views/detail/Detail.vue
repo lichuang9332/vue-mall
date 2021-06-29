@@ -5,7 +5,7 @@
       class="detail-nav-bar"
       ref='DetailNavBar'
       @backClickEmit="backClickEmit"></DetailNavBar>
-      <div v-for="item in $store.state.cartList">{{item}}</div>
+      <!-- <div v-for="item in $store.state.cartList">{{item}}</div> -->
       <Scroll class="content"
       :probeType="3"
       @scrollEmit="scrollEmit"
@@ -124,6 +124,9 @@
       </Scroll>
       <detail-bottom-bar @addToCartEmit="addToCartEmit" ></detail-bottom-bar>
       <back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
+      <!-- 直接传字符串的时候不用: -->
+      <!-- 直接采用封装成插件的模式 -->
+      <!-- <toast :msg="msg" :isShow="isShowToast"></toast> -->
   </div>
 </template>
 
@@ -134,9 +137,11 @@
   import GoodsList from 'components/content/goods/GoodsList'
   import DetailBottomBar from './child/DetailBottomBar'
   import BackTop from 'components/content/backtop/BackTop.vue'
+  // import Toast from 'components/common/toast/Toast.vue'
 
   import {formatDate} from 'common/utils'
   import {getDetail,Goods} from 'network/detail'
+  import {mapActions} from 'vuex'  //映射actions
   export default {
     name: 'Detail',
     data(){
@@ -158,10 +163,15 @@
             {id:10,img:require("assets/img/05.jpg"),collect:'25',price:500.00,title:'商品15描述商品不错哦哈哈描述商品不错哦哈哈'},
           ],
           themeTopY:[0,250,650,1045],
-          isShowBackTop: false,   //是否显示回到顶部
+          // msg: '哈哈哈',
+          // isShowToast:false,
+          isShowBackTop: false   //是否显示回到顶部
+
       }
     },
     methods:{
+      //映射store的actions
+      ...mapActions(['addCart']),
       //收到的滚动事件
       scrollEmit(position){
         // console.log(position)
@@ -204,20 +214,37 @@
         // console.log('----');
         const product = {};
         //正常业务逻辑是传递ID到后端存储即可，现在是模拟的
+        //find()和findeIndex()都必须传递回调函数，并且会掉函数根据条件返回true或者false,与filter类似
         let indexL = this.showGoods.find((item)=>{
           //返回 true的同时得到item
           return this.id == item.id
         })
-        
-        console.log(indexL);
-        product.img = this.showGoods[0].img;
-        product.title= this.showGoods[0].title;
-        product.collect = this.showGoods[0].collect;
-        product.price =this.showGoods[0].price;
-        product.id = this.showGoods[0].id;
+        let in_p = this.showGoods.findIndex((currentValue, index_p)=>{
+            return currentValue.id==indexL.id
+        },indexL)
+
+        console.log(in_p);
+        product.img = this.showGoods[in_p].img;
+        product.title= this.showGoods[in_p].title;
+        product.collect = this.showGoods[in_p].collect;
+        product.price =this.showGoods[in_p].price;
+        product.id = this.showGoods[in_p].id;
         //2.添加到购物车
         //store必须通过mutations才做state
-        this.$store.commit('addCart', product);
+        //this.$store.commit('addCart', product);
+        //store必须通过actions做非单一的复杂操作
+        this.$store.dispatch('addCart', product).then(res=>{
+          console.log(res);
+          // this.msg=res;
+          // this.isShowToast =true;
+          // setTimeout(()=>{
+          //   this.msg= '';
+          //   this.isShowToast =false;
+          // },1500)
+          //封装成插件
+            this.$toast.show(res);
+        });
+        //添加购物车成功
 
       }
     },
@@ -239,6 +266,7 @@
       GoodsList,
       DetailBottomBar,
       BackTop
+      // Toast
     },
     created(){
         this.id = this.$route.params.id;
