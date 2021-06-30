@@ -13,6 +13,8 @@ import vueLazyLoad from 'vue-lazyload'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';   //样式也要导入
 
+//安装postcss-px-to-viewport(npm install postcss-px-to-viewport --save-dev)【也可以npm install px2rem-loader lib-flexible --save】
+
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
