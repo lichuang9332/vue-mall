@@ -3,13 +3,27 @@
     <div class="profile-info">
       <div class="profile-info-my">我的档案</div>
       <div class="profile-info-oprate">
-        <div class="avatar"><img src="" alt=""></div>
-        <div class="login">登录/注册</div>
+        <div class="avatar"><img src="~assets/img/01.jpg" alt=""></div>
+        <div class="login">
+          <div>登录/注册</div>
+          <div>绑定手机号</div>
+          </div>
         <div class="arrow">></div>
       </div>
     </div>
     <div class="profile-account">
-
+      <div class="profile-account-left">
+        <p>0.00元</p>
+        <p>我的余额</p>
+      </div>
+      <div class="profile-account-center">
+        <p>0个</p>
+        <p>我的优惠</p>
+      </div>
+      <div class="profile-account-right">
+        <p>0分</p>
+        <p>我的积分</p>
+      </div>
     </div>
     <div class="profile-menu">
 
@@ -49,7 +63,7 @@
 
 <style lang="css" scoped>
 .profile{
-
+  background-color: rgb(242,242,242);
 }
 .profile-info{
   width: 100%;
@@ -60,8 +74,9 @@
 .profile-info-my{
   height: 40px;
   line-height: 40px;
+  font-size: 18px;
   font-weight: 600;
-  border: 1px solid red;
+  /* border: 1px solid red; */
   text-align: center;
 }
 .profile-info-oprate{
@@ -69,6 +84,45 @@
   height: 100px;
 }
 .profile-info-oprate>.avatar{
-  
+  width: 100px;
+}
+.avatar img{
+  width: 60px;
+  height: 60px;
+  margin: 20px 20px;
+  border-radius: 50%;
+}
+.profile-info-oprate>.login{
+  width: calc(100% - 150px);
+  padding: 20px 0;
+  font-size: 16px;
+  line-height: 30px;
+}
+.profile-info-oprate>.arrow{
+  padding-right: 10px;
+  width: 50px;
+  text-align: right;
+  line-height: 100px;
+}
+/* 账户信息 */
+.profile-account{
+    background-color:#FFFFFF;
+    display: flex;
+    height: 80px;
+    align-items: center;/*定义元素垂直居中*/
+    justify-content: center; /*定义元素水平居中*/
+}
+.profile-account>div{
+  width: 33%;
+  height: 100%;
+  border-right: 1px solid #CCCCCC;
+  text-align: center;
+  /* vertical-align: middle; */
+  /* 设置行高，此时给定了基线，此时如果要实现居中，只需要让基线居中，过设置vertical-align:middle */
+}
+.profile-menu{
+  height: 180px;
+  margin-top: 10px;
+  background-color:#FFFFFF;
 }
 </style>
