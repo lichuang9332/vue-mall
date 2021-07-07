@@ -26,11 +26,15 @@
       </div>
     </div>
     <div class="profile-menu">
-
+      <div class="menu-item">我的消息</div>
+      <div class="menu-item">积分商城</div>
+      <div class="menu-item">会员卡</div>
     </div>
     <div class="profile-more">
-
+      <div class="more-item" @click="clickToCart">我的购物车</div>
+      <div class="more-item">下载购物APP</div>
     </div>
+    <!-- router -->
   </div>
 </template>
 
@@ -46,7 +50,9 @@
       }
     },
     methods:{
-
+      clickToCart(){
+        this.$router.push('cart'); //动态路由形式
+      }
     },
     computed:{
 
@@ -113,16 +119,33 @@
     justify-content: center; /*定义元素水平居中*/
 }
 .profile-account>div{
+  font-weight: 500;
   width: 33%;
   height: 100%;
-  border-right: 1px solid #CCCCCC;
   text-align: center;
   /* vertical-align: middle; */
   /* 设置行高，此时给定了基线，此时如果要实现居中，只需要让基线居中，过设置vertical-align:middle */
 }
+.profile-account>div:not(:last-child){
+    border-right: 1px solid #CCCCCC;
+}
 .profile-menu{
-  height: 180px;
+  height: 150px;
   margin-top: 10px;
   background-color:#FFFFFF;
+}
+.profile-more{
+  height: 100px;
+  margin-top: 10px;
+  background-color: #FFFFFF;
+}
+.menu-item,.more-item{
+  height: 50px;
+  line-height: 50px;
+  margin-left: 35px;
+  font-weight: 500;
+}
+.menu-item:not(:last-child),.more-item:not(:last-child){
+  border-bottom: 1px solid #CCCCCC;
 }
 </style>
