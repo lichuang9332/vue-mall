@@ -293,3 +293,11 @@
 }
 
 </style>
+<!-- 不加scoped的作用域 可以覆盖点elementUI的样式-->
+<style>
+  .el-carousel__button{
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+</style>
