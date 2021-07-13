@@ -1,27 +1,32 @@
 <template>
   <div class="category">
     <!-- 放入搜索导航栏 -->
-
+    <NavBar class="category-search">
+      <div slot="center" class="header-search-input">
+        <input value="" maxlength="20" name="keyword" id="msKeyWord" type="text" cleardefault="no" autocomplete="off"
+          placeholder="行车记录仪" class="hilight2">
+        <!-- <input name="catelogyList" type="text" value="" style="display:none;"> -->
+        <div class="head-input-icon J_ping" id="msSearchTab" report-eventid="MSearch_SearchTab" style="display:none;">
+        </div>
+      </div>
+    </NavBar>
     <div class="category-viewport">
       <div class="category-tab-container">
-        <scroll class="content-list"
-          :probeType="3"
-          @scrollEmit="scrollEmit"
-          ref="scrolltab">
-                <div class="category-tab">
-                  <ul style="transform: translateY(0px);" id="category2">
-                    <li v-for="(item,index) in rootList" @click="clickTabLi(index)" :class="{current: index==currentIndex}"
-                      m_index="index" id="">
-                      {{item.name}}
-                    </li>
-                  </ul>
-                </div>
+        <scroll class="content-list" :probeType="3" @scrollEmit="scrollEmit" ref="scrolltab">
+          <div class="category-tab">
+            <ul style="transform: translateY(0px);" id="category2">
+              <li v-for="(item,index) in rootList" @click="clickTabLi(index)" :class="{current: index==currentIndex}"
+                m_index="index" id="">
+                {{item.name}}
+              </li>
+            </ul>
+          </div>
 
         </scroll>
       </div>
       <div class="category-content">
-        <div id="branchScroll" style="overflow: hidden;  width: 100%;"
-          class="jd-category-content-wrapper">
+        <scroll class="content-con" :probeType="3" @scrollEmit="scrollEmitCon" ref="scrollcon">
+        <div id="branchScroll" style="overflow: hidden;  width: 100%;" class="jd-category-content-wrapper">
           <div id="branchList" style="transform: translateY(0px);">
             <div class="jd-category-div cur"><a
                 href="https://wqs.jd.com/wxsq_project/portal/top-list/hot.html?ptag=137886.4.1" class="rank-box J_ping"
@@ -155,6 +160,7 @@
             </div>
           </div>
         </div>
+        </scroll>
       </div>
 
     </div>
@@ -164,6 +170,8 @@
 <script>
   //导入封装好的scroll插件
   import Scroll from 'components/common/scroll/Scroll.vue'
+  //导入导航栏,navbar
+  import NavBar from 'components/common/navbar/NavBar.vue'
 
   export default {
     name: 'Category',
@@ -331,7 +339,10 @@
       clickTabLi(index) {
         this.currentIndex = index;
       },
-      scrollEmit(){
+      scrollEmit() {
+
+      },
+      scrollEmitCon(){
 
       }
     },
@@ -342,7 +353,8 @@
 
     },
     components: {
-      Scroll
+      Scroll,
+      NavBar
     },
     //生命周期函数(ceated()不能拿到元素)
     mounted() {
@@ -377,7 +389,7 @@
 <style scoped>
   /* 父类必须设置高度才有效 */
 
-/*  .category-viewport {
+  /*  .category-viewport {
     height: auto;
     min-height: 100%;
   } */
@@ -394,10 +406,12 @@
     padding: 0;
     list-style-type: none;
   }
-.category-viewport{
-  display: flex;
-  height: 100vh;
-}
+
+  .category-viewport {
+    display: flex;
+    height: 100vh;
+  }
+
   /* scroll外层给定高度,scroll组件要溢出隐藏和高度100% */
   .category-tab-container {
     /* overflow-x: scroll; */
@@ -410,16 +424,26 @@
     min-width: 76px;
     overflow: hidden;
     /* border: 1px solid red; */
-/*    高度这里要用 vh  1vw=视窗宽度的1% 1vh=视窗高度的1%  alc()函数使用标准的数学运算优先级规则；
+    /*    高度这里要用 vh  1vw=视窗宽度的1% 1vh=视窗高度的1%  alc()函数使用标准的数学运算优先级规则；
 所以，只需设置div的高度height为calc(100vh)即可,100vh = 视窗高度的100%， */
     height: 100%;
   }
-.category-tab-container .content-list{
+
+  .category-tab-container .content-list {
     /* border: 1px solid green; */
     /* height: calc(100vh - 49px); */
-    height: calc(100% - 49px);
+    height: calc(100% - 49px - 44px);
     overflow: hidden;
-}
+  }
+  .category-content{
+    overflow: hidden;
+    height: 100%;
+  }
+  .category-content .content-con{
+    height: calc(100% - 49px - 44px);
+    overflow: hidden;
+  }
+
   .category-tab li {
     height: 46px;
     line-height: 46px;
@@ -673,5 +697,18 @@
     -o-box-pack: center;
     z-index: 2;
     position: relative;
+  }
+  .category-search{
+    background-color: #fff;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .header-search-input>input{
+    border-radius: 15px;
+    border: 0 solid #F0F0F0;
+    background-color: #f0f0f0;
+    font-size: 14px;
+    line-height: 14px;
+    height: 30px;
+    width: 100%;
   }
 </style>
